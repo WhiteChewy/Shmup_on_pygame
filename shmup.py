@@ -3,14 +3,14 @@ from os import path
 
 import pygame
 
-from constants import FONT_NAME, WIDTH, HEIGHT, FPS
+from constants import FONT_NAME, WIDTH, HEIGHT, FPS, COLOR
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(player_asset, (70, 40))
-        self.image.set_colorkey(BLACK)
+        self.image.set_colorkey(COLOR.BLACK.value)
         self.rect = self.image.get_rect()
         self.radius = 31
         #  pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
@@ -54,7 +54,7 @@ class Mob(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image_original = random.choice(meteor_images)
-        self.image_original.set_colorkey(BLACK)
+        self.image_original.set_colorkey(COLOR.BLACK.value)
         self.image = self.image_original.copy()
         self.rect = self.image.get_rect()
         self.radius = int(self.rect.width * 0.85 / 2)
@@ -92,7 +92,7 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = bullet_asset
-        self.image.set_colorkey(BLACK)
+        self.image.set_colorkey(COLOR.BLACK.value)
         self.rect = self.image.get_rect()
         self.rect.bottom = y
         self.rect.centerx = x
@@ -106,7 +106,7 @@ class Bullet(pygame.sprite.Sprite):
 
 def draw_text(surf, text, size, x, y):
     font = pygame.font.Font(FONT_NAME, size)
-    text_surface = font.render(text, True, WHITE)
+    text_surface = font.render(text, True, COLOR.WHITE.value)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
@@ -129,13 +129,6 @@ if __name__ == '__main__':
     player_asset = pygame.image.load(path.join(assets, 'sampleShip3.png')).convert()
     meteor_asset = pygame.image.load(path.join(assets, 'meteorBig.png')).convert()
     bullet_asset = pygame.image.load(path.join(assets, 'laserGreen.png')).convert()
-    # RGB ЦВЕТА
-    BLACK = (0, 0, 0)
-    WHITE = (255, 255, 255)
-    RED = (255, 0, 0)
-    GREEN = (0, 255, 0)
-    BLUE = (0, 0, 255)
-    YELLOW = (255, 255, 0)
 
     # звук
     sound_dir = path.join(path.dirname(__file__), "sound")
@@ -193,7 +186,7 @@ if __name__ == '__main__':
         if hits:
             running = False
         # Рендеринг
-        screen.fill(BLACK)  # заливка окна черным
+        screen.fill(COLOR.BLACK.value)  # заливка окна черным
         screen.blit(background, background_rect)
         all_sprites.draw(screen)
         draw_text(screen, "YOUR SCORE: " + str(score), 18, WIDTH / 2, 10)
