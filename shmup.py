@@ -6,6 +6,14 @@ import pygame
 from constants import FONT_NAME, WIDTH, HEIGHT, FPS, COLOR
 
 
+# TODO's for Nikitos :3
+# FIXME: убери магические цифры, например как тут: pygame.transform.scale(player_asset, (70, 40))
+# FIXME: 1 класс == 1 файл
+# FIXME: разбить предзагрузку на отдельные функции (или на одну функцию, а то мейн оч большой)
+# FIXME: все что постоянно, то вынесы в константы, например список как тут: `for sound in ['exp1.wav', 'exp2.wav']:`
+# FIXME: главное не переборщить!) Всегда обращай внимание на дзен питона если чувствуешь, что что-то идет не так :)
+
+
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
