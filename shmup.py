@@ -41,6 +41,8 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(player_asset, (70, 40))
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
+        self.radius = 31
+#        pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 20
         self.speedx = 0  # скорость с которй движется игрок по оси х
@@ -82,6 +84,8 @@ class Mob(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(meteor_asset, (68, 55))
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
+        self.radius = int(self.rect.width * 0.85 / 2)
+#        pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.x = random.randrange(WIDTH - self.rect.width)
         self.rect.y = random.randrange(-100, 40)
         self.speedy = random.randrange(1, 8)
@@ -145,7 +149,7 @@ while running:
         all_sprites.add(m)
         mobs.add(m)
 
-    hits = pygame.sprite.spritecollide(player, mobs, False)
+    hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
     if hits:
         running = False
     # Рендеринг
