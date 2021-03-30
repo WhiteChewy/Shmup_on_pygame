@@ -1,11 +1,30 @@
 # Скеллет игрового цикла в Pygame
 import pygame
 import random
+from os import path
+
 
 # блок определения размеров окна и фпс
 WIDTH = 480  # Ширина игрового окна
 HEIGHT = 600  # высота игровго окна
 FPS = 60  # частота кадров в секунду
+
+# далее инициализируется игра и окно
+pygame.init()   # "запуск pygame"
+pygame.mixer.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))  # создание окна игры
+pygame.display.set_caption("Shoot 'em UP!")
+clock = pygame.time.Clock()
+
+# загрузка графики
+assets = path.join(path.dirname(__file__), "assets")
+background = pygame.image.load(path.join(assets, "starBackground.png")).convert()
+background_rect = background.get_rect()
+# растягиваем фон на все окно
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+player_asset = pygame.image.load(path.join(assets, 'sampleShip3.png')).convert()
+meteor_asset = pygame.image.load(path.join(assets, 'meteorBig.png')).convert()
+bullet_asset = pygame.image.load(path.join(assets, 'laserGreen.png')).convert()
 
 # RGB ЦВЕТА
 BLACK = (0, 0, 0)
@@ -15,19 +34,12 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
-# далее инициализируется игра и окно
-pygame.init()   # "запуск pygame"
-pygame.mixer.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))  # создание окна игры
-pygame.display.set_caption("Shoot 'em UP!")
-clock = pygame.time.Clock()
-
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 40))  # размер спрайта игрока
-        self.image.fill(GREEN)
+        self.image = pygame.transform.scale(player_asset, (70, 40))
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 20
@@ -67,8 +79,8 @@ class Player(pygame.sprite.Sprite):
 class Mob(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((30, 40))
-        self.image.fill(RED)
+        self.image = pygame.transform.scale(meteor_asset, (68, 55))
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(WIDTH - self.rect.width)
         self.rect.y = random.randrange(-100, 40)
@@ -87,8 +99,8 @@ class Mob(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((10, 10))
-        self.image.fill(YELLOW)
+        self.image = bullet_asset
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.bottom = y
         self.rect.centerx = x
@@ -109,6 +121,7 @@ for i in range(8):
     mob = Mob()
     all_sprites.add(mob)
     mobs.add(mob)
+
 # игровой цикл
 running = True
 while running:
@@ -137,7 +150,8 @@ while running:
         running = False
     # Рендеринг
     screen.fill(BLACK)  # заливка окна черным
+    screen.blit(background, background_rect)
     all_sprites.draw(screen)
-    pygame.display.flip()  # отображение отрисованного экрана
+    pygame.display.flip()  # отображение отрифф сованного экрана
 
 pygame.quit()
