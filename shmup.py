@@ -81,23 +81,39 @@ class Player(pygame.sprite.Sprite):
 class Mob(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale(meteor_asset, (68, 55))
-        self.image.set_colorkey(BLACK)
+        self.image_original = random.choice(meteor_images)
+        self.image_original.set_colorkey(BLACK)
+        self.image = self.image_original.copy()
         self.rect = self.image.get_rect()
         self.radius = int(self.rect.width * 0.85 / 2)
 #        pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.x = random.randrange(WIDTH - self.rect.width)
         self.rect.y = random.randrange(-100, 40)
         self.speedy = random.randrange(1, 8)
-        self.speedx = random.randrange(-2, 2)
+        self.speedx = random.randrange(-4, 4)
+        self.rotation = 0
+        self.rotation_speed = random.randrange(-8, 8)
+        self.last_update = pygame.time.get_ticks()
 
     def update(self):
+        self.rotate()
         self.rect.y += self.speedy
         self.rect.x += self.speedx
         if self.rect.top > HEIGHT + 10 or self.rect.right > WIDTH + 20:
             self.rect.x = random.randrange(WIDTH - self.rect.width)
             self.rect.y = random.randrange(-100, -40)
             self.speedy = random.randrange(1, 8)
+
+    def rotate(self):
+        now = pygame.time.get_ticks()
+        if now - self.last_update > 50:
+            self.last_update = now
+            self.rotation = (self.rotation + self.rotation_speed) % 360
+            new_image = pygame.transform.rotate(self.image_original, self.rotation)
+            old_center = self.rect.center
+            self.image = new_image
+            self.rect = self.image.get_rect()
+            self.rect.center = old_center
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -116,8 +132,23 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
 
+font_name = pygame.font.match_font('arial')
+
+
+def draw_text(surf, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
+
 all_sprites = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
+meteor_images = []
+meteor_list = ['meteorBig.png', 'meteorSmall.png']
+for img in meteor_list:
+    meteor_images.append(pygame.image.load(path.join(assets, img)).convert())
 bullets = pygame.sprite.Group()
 player = Player()
 all_sprites.add(player)
@@ -125,6 +156,7 @@ for i in range(8):
     mob = Mob()
     all_sprites.add(mob)
     mobs.add(mob)
+score = 0
 
 # игровой цикл
 running = True
@@ -145,6 +177,7 @@ while running:
     # проверка столкновений
     bullet_hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
     for hit in bullet_hits:
+        score += 60 - hit.radius
         m = Mob()
         all_sprites.add(m)
         mobs.add(m)
@@ -156,6 +189,7 @@ while running:
     screen.fill(BLACK)  # заливка окна черным
     screen.blit(background, background_rect)
     all_sprites.draw(screen)
+    draw_text(screen, "YOUR SCORE: " + str(score), 18, WIDTH / 2, 10)
     pygame.display.flip()  # отображение отрифф сованного экрана
 
 pygame.quit()
