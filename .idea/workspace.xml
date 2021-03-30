@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd655ef9-5027-418f-8f9b-6e1c136858fd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/sound/DEmo_3.ogg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/exp1.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/exp2.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound/shoot.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shmup.py" beforeDir="false" afterPath="$PROJECT_DIR$/shmup.py" afterDir="false" />
     </list>
@@ -32,10 +36,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sound" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pocke\Desktop\Shmup_on_pygame\sound" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pocke\Desktop\Shmup_on_pygame\sound" />
       <recent name="C:\Users\pocke\Desktop\Shmup_on_pygame\assets" />
       <recent name="C:\Users\pocke\Desktop\Shmup_on_pygame\models" />
     </key>
@@ -98,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617111330405</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added points and text renders and animation of asteroids rotation">
+      <created>1617113000265</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1617113000265</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -117,6 +132,7 @@
     <MESSAGE value="Added logic of movement and kills of mobs" />
     <MESSAGE value="added assets" />
     <MESSAGE value="change AABB to circle collides" />
-    <option name="LAST_COMMIT_MESSAGE" value="change AABB to circle collides" />
+    <MESSAGE value="added points and text renders and animation of asteroids rotation" />
+    <option name="LAST_COMMIT_MESSAGE" value="added points and text renders and animation of asteroids rotation" />
   </component>
 </project>

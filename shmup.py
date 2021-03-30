@@ -25,7 +25,6 @@ background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 player_asset = pygame.image.load(path.join(assets, 'sampleShip3.png')).convert()
 meteor_asset = pygame.image.load(path.join(assets, 'meteorBig.png')).convert()
 bullet_asset = pygame.image.load(path.join(assets, 'laserGreen.png')).convert()
-
 # RGB ЦВЕТА
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -33,6 +32,15 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
+
+# звук
+sound_dir = path.join(path.dirname(__file__), "sound")
+shoot_sound = pygame.mixer.Sound(path.join(sound_dir, "shoot.wav"))
+exp_sounds = []
+for sound in ['exp1.wav', 'exp2.wav']:
+    exp_sounds.append(pygame.mixer.Sound(path.join(sound_dir, sound)))
+pygame.mixer.music.load(path.join(sound_dir, "DEmo_3.ogg"))
+pygame.mixer.music.set_volume(0.5)
 
 
 class Player(pygame.sprite.Sprite):
@@ -76,6 +84,7 @@ class Player(pygame.sprite.Sprite):
         bullet = Bullet(self.rect.centerx, self.rect.top)
         all_sprites.add(bullet)
         bullets.add(bullet)
+        shoot_sound.play()
 
 
 class Mob(pygame.sprite.Sprite):
@@ -157,6 +166,7 @@ for i in range(8):
     all_sprites.add(mob)
     mobs.add(mob)
 score = 0
+pygame.mixer.music.play(loops=-1)
 
 # игровой цикл
 running = True
@@ -178,6 +188,7 @@ while running:
     bullet_hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
     for hit in bullet_hits:
         score += 60 - hit.radius
+        random.choice(exp_sounds).play()
         m = Mob()
         all_sprites.add(m)
         mobs.add(m)
