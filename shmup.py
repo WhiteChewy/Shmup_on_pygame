@@ -1,56 +1,27 @@
-# Скеллет игрового цикла в Pygame
-import pygame
 import random
 from os import path
 
+import pygame
 
-# блок определения размеров окна и фпс
-WIDTH = 480  # Ширина игрового окна
-HEIGHT = 600  # высота игровго окна
-FPS = 60  # частота кадров в секунду
+from constants import FONT_NAME, WIDTH, HEIGHT, FPS, COLOR
 
-# далее инициализируется игра и окно
-pygame.init()   # "запуск pygame"
-pygame.mixer.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))  # создание окна игры
-pygame.display.set_caption("Shoot 'em UP!")
-clock = pygame.time.Clock()
 
-# загрузка графики
-assets = path.join(path.dirname(__file__), "assets")
-background = pygame.image.load(path.join(assets, "starBackground.png")).convert()
-background_rect = background.get_rect()
-# растягиваем фон на все окно
-background = pygame.transform.scale(background, (WIDTH, HEIGHT))
-player_asset = pygame.image.load(path.join(assets, 'sampleShip3.png')).convert()
-meteor_asset = pygame.image.load(path.join(assets, 'meteorBig.png')).convert()
-bullet_asset = pygame.image.load(path.join(assets, 'laserGreen.png')).convert()
-# RGB ЦВЕТА
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-YELLOW = (255, 255, 0)
-
-# звук
-sound_dir = path.join(path.dirname(__file__), "sound")
-shoot_sound = pygame.mixer.Sound(path.join(sound_dir, "shoot.wav"))
-exp_sounds = []
-for sound in ['exp1.wav', 'exp2.wav']:
-    exp_sounds.append(pygame.mixer.Sound(path.join(sound_dir, sound)))
-pygame.mixer.music.load(path.join(sound_dir, "DEmo_3.ogg"))
-pygame.mixer.music.set_volume(0.5)
+# TODO's for Nikitos :3
+# FIXME: убери магические цифры, например как тут: pygame.transform.scale(player_asset, (70, 40))
+# FIXME: 1 класс == 1 файл
+# FIXME: разбить предзагрузку на отдельные функции (или на одну функцию, а то мейн оч большой)
+# FIXME: все что постоянно, то вынесы в константы, например список как тут: `for sound in ['exp1.wav', 'exp2.wav']:`
+# FIXME: главное не переборщить!) Всегда обращай внимание на дзен питона если чувствуешь, что что-то идет не так :)
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(player_asset, (70, 40))
-        self.image.set_colorkey(BLACK)
+        self.image.set_colorkey(COLOR.BLACK.value)
         self.rect = self.image.get_rect()
         self.radius = 31
-#        pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
+        #  pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 20
         self.speedx = 0  # скорость с которй движется игрок по оси х
@@ -91,11 +62,11 @@ class Mob(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image_original = random.choice(meteor_images)
-        self.image_original.set_colorkey(BLACK)
+        self.image_original.set_colorkey(COLOR.BLACK.value)
         self.image = self.image_original.copy()
         self.rect = self.image.get_rect()
         self.radius = int(self.rect.width * 0.85 / 2)
-#        pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
+        # pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.x = random.randrange(WIDTH - self.rect.width)
         self.rect.y = random.randrange(-100, 40)
         self.speedy = random.randrange(1, 8)
@@ -129,7 +100,7 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = bullet_asset
-        self.image.set_colorkey(BLACK)
+        self.image.set_colorkey(COLOR.BLACK.value)
         self.rect = self.image.get_rect()
         self.rect.bottom = y
         self.rect.centerx = x
@@ -141,66 +112,92 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
 
-font_name = pygame.font.match_font('arial')
-
-
 def draw_text(surf, text, size, x, y):
-    font = pygame.font.Font(font_name, size)
-    text_surface = font.render(text, True, WHITE)
+    font = pygame.font.Font(FONT_NAME, size)
+    text_surface = font.render(text, True, COLOR.WHITE.value)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
 
 
-all_sprites = pygame.sprite.Group()
-mobs = pygame.sprite.Group()
-meteor_images = []
-meteor_list = ['meteorBig.png', 'meteorSmall.png']
-for img in meteor_list:
-    meteor_images.append(pygame.image.load(path.join(assets, img)).convert())
-bullets = pygame.sprite.Group()
-player = Player()
-all_sprites.add(player)
-for i in range(8):
-    mob = Mob()
-    all_sprites.add(mob)
-    mobs.add(mob)
-score = 0
-pygame.mixer.music.play(loops=-1)
+if __name__ == '__main__':
+    # далее инициализируется игра и окно
+    pygame.init()  # "запуск pygame"
+    pygame.mixer.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))  # создание окна игры
+    pygame.display.set_caption("Shoot 'em UP!")
+    clock = pygame.time.Clock()
 
-# игровой цикл
-running = True
-while running:
-    clock.tick(FPS)  # держим цикл на правильной скорости.
-    # Обработка событий
-    for event in pygame.event.get():
-        # проверить закрытие окна
-        if event.type == pygame.QUIT:
+    # загрузка графики
+    assets = path.join(path.dirname(__file__), "assets")
+    background = pygame.image.load(path.join(assets, "starBackground.png")).convert()
+    background_rect = background.get_rect()
+    # растягиваем фон на все окно
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    player_asset = pygame.image.load(path.join(assets, 'sampleShip3.png')).convert()
+    meteor_asset = pygame.image.load(path.join(assets, 'meteorBig.png')).convert()
+    bullet_asset = pygame.image.load(path.join(assets, 'laserGreen.png')).convert()
+
+    # звук
+    sound_dir = path.join(path.dirname(__file__), "sound")
+    shoot_sound = pygame.mixer.Sound(path.join(sound_dir, "shoot.wav"))
+    exp_sounds = []
+    for sound in ['exp1.wav', 'exp2.wav']:
+        exp_sounds.append(pygame.mixer.Sound(path.join(sound_dir, sound)))
+
+    pygame.mixer.music.load(path.join(sound_dir, "DEmo_3.ogg"))
+    pygame.mixer.music.set_volume(0.5)
+    all_sprites = pygame.sprite.Group()
+    mobs = pygame.sprite.Group()
+    meteor_images = []
+    meteor_list = ['meteorBig.png', 'meteorSmall.png']
+    for img in meteor_list:
+        meteor_images.append(pygame.image.load(path.join(assets, img)).convert())
+
+    bullets = pygame.sprite.Group()
+    player = Player()
+    all_sprites.add(player)
+    for i in range(8):
+        mob = Mob()
+        all_sprites.add(mob)
+        mobs.add(mob)
+
+    score = 0
+    pygame.mixer.music.play(loops=-1)
+
+    # игровой цикл
+    running = True
+    while running:
+        clock.tick(FPS)  # держим цикл на правильной скорости.
+        # Обработка событий
+        for event in pygame.event.get():
+            # проверить закрытие окна
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    player.shoot()
+
+        # Обновление
+        all_sprites.update()
+
+        # проверка столкновений
+        bullet_hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
+        for hit in bullet_hits:
+            score += 60 - hit.radius
+            random.choice(exp_sounds).play()
+            m = Mob()
+            all_sprites.add(m)
+            mobs.add(m)
+
+        hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
+        if hits:
             running = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                player.shoot()
+        # Рендеринг
+        screen.fill(COLOR.BLACK.value)  # заливка окна черным
+        screen.blit(background, background_rect)
+        all_sprites.draw(screen)
+        draw_text(screen, "YOUR SCORE: " + str(score), 18, WIDTH / 2, 10)
+        pygame.display.flip()  # отображение отрифф сованного экрана
 
-    # Обновление
-    all_sprites.update()
-
-    # проверка столкновений
-    bullet_hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
-    for hit in bullet_hits:
-        score += 60 - hit.radius
-        random.choice(exp_sounds).play()
-        m = Mob()
-        all_sprites.add(m)
-        mobs.add(m)
-
-    hits = pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
-    if hits:
-        running = False
-    # Рендеринг
-    screen.fill(BLACK)  # заливка окна черным
-    screen.blit(background, background_rect)
-    all_sprites.draw(screen)
-    draw_text(screen, "YOUR SCORE: " + str(score), 18, WIDTH / 2, 10)
-    pygame.display.flip()  # отображение отрифф сованного экрана
-
-pygame.quit()
+    pygame.quit()
