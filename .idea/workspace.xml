@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd655ef9-5027-418f-8f9b-6e1c136858fd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mob.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shmup.py" beforeDir="false" afterPath="$PROJECT_DIR$/shmup.py" afterDir="false" />
-    </list>
+    <list default="true" id="dd655ef9-5027-418f-8f9b-6e1c136858fd" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +15,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubPullRequestsUISettings">
@@ -139,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617113000265</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="project &quot;pythonisation&quot;">
+      <created>1617465288109</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617465288109</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -159,6 +163,7 @@
     <MESSAGE value="added assets" />
     <MESSAGE value="change AABB to circle collides" />
     <MESSAGE value="added points and text renders and animation of asteroids rotation" />
-    <option name="LAST_COMMIT_MESSAGE" value="added points and text renders and animation of asteroids rotation" />
+    <MESSAGE value="project &quot;pythonisation&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="project &quot;pythonisation&quot;" />
   </component>
 </project>
