@@ -20,6 +20,8 @@ SOUND_DIR = path.join(path.dirname(__file__), "sound")
 METEOR_IMAGES = []
 for img in METEOR_LIST:
     METEOR_IMAGES.append(pygame.image.load(path.join(ASSETS, img)).convert())
+HEALTHBAR_LENGTH = 100
+HEALTHBAR_HEIGHT = 10
 
 
 class COLOR(Enum):

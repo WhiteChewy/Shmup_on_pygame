@@ -1,6 +1,5 @@
 import pygame
 from constants import PLAYER_ASSET, COLOR, WIDTH, HEIGHT
-from bullet import Bullet
 
 
 class Player(pygame.sprite.Sprite):
@@ -15,6 +14,9 @@ class Player(pygame.sprite.Sprite):
         self.rect.bottom = HEIGHT - 20
         self.speedx = 0  # скорость с которй движется игрок по оси х
         self.speedy = 0  # скорость с которой движется игрок по оси y
+        self.health = 100  # "здоровье" корабля
+        self.shoot_delay = 250  # пауза между выстрелами в милдисекундах
+        self.last_shot = pygame.time.get_ticks()
 
     def update(self):
         self.speedx = 0
