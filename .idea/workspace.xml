@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd655ef9-5027-418f-8f9b-6e1c136858fd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion00.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion03.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion04.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion05.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion06.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion07.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/regularExplosion08.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/explosion.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion00.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion05.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion06.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion07.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/sonicExplosion08.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
@@ -107,6 +106,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="player" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Shump_on_pygame" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/player.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="shmup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Shump_on_pygame" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -131,6 +151,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.shmup" />
+        <item itemvalue="Python.player" />
         <item itemvalue="Python.explosion" />
         <item itemvalue="Python.mob" />
       </list>
@@ -187,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617465567913</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added exlposions and health bar">
+      <created>1617470835202</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1617470835202</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -218,6 +246,7 @@
     <MESSAGE value="change AABB to circle collides" />
     <MESSAGE value="added points and text renders and animation of asteroids rotation" />
     <MESSAGE value="project &quot;pythonisation&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="project &quot;pythonisation&quot;" />
+    <MESSAGE value="added exlposions and health bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="added exlposions and health bar" />
   </component>
 </project>

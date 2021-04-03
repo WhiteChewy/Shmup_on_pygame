@@ -17,8 +17,20 @@ class Player(pygame.sprite.Sprite):
         self.health = 100  # "здоровье" корабля
         self.shoot_delay = 250  # пауза между выстрелами в милдисекундах
         self.last_shot = pygame.time.get_ticks()
+        self.lives = 3
+        self.hidden = False
+        self.hide_timer = pygame.time.get_ticks()
+
+    def hide(self):
+        self.hidden = True
+        self.hide_timer = pygame.time.get_ticks()
+        self.rect.center = (WIDTH / 2, HEIGHT + 200)
 
     def update(self):
+        if self.hidden and pygame.time.get_ticks() - self.hide_timer > 100:
+            self.hidden = False
+            self.rect.centerx = WIDTH / 2
+            self.rect. bottom = HEIGHT - 10
         self.speedx = 0
         self.speedy = 0
         # get_pressed() возвращает словарь со всеми клавишами и значениями Истина Ложь

@@ -53,6 +53,7 @@ def draw_text(surf, text, size, x, y):
     surf.blit(text_surface, text_rect)
 
 
+# отрисовка астеройдов
 def mob_ini(n):
     for i in range(n):
         mob = Mob()
@@ -60,6 +61,7 @@ def mob_ini(n):
         mobs.add(mob)
 
 
+# отрисовка индикатора жизни
 def draw_healthbar(surface, x, y, filled):
     if filled < 0:
         filled = 0
@@ -71,16 +73,29 @@ def draw_healthbar(surface, x, y, filled):
 
 
 def explosion_init():
-    explosion = {'lg': [], 'sm': []}
+    explosion = {'large': [], 'small': [], 'player': []}
     for i in range(9):
         file = 'regularExplosion0{}.png'.format(i)
         image = pygame.image.load(path.join(ASSETS, file)).convert()
         image.set_colorkey(COLOR.BLACK.value)
         img_lg = pygame.transform.scale(image, (75, 75))
-        explosion['lg'].append(img_lg)
+        explosion['large'].append(img_lg)
         img_sm = pygame.transform.scale(image, (32, 32))
-        explosion['sm'].append(img_sm)
+        explosion['small'].append(img_sm)
+        file = 'sonicExplosion0{}.png'.format(i)
+        image = pygame.image.load(path.join(ASSETS, file)).convert()
+        image.set_colorkey(COLOR.BLACK.value)
+        explosion['player']. append(image)
     return explosion
+
+
+# отрисовка количества жизней
+def draw_lives(surface, x, y, lives, image):
+    for i in range(lives):
+        image_rect = image.get_rect()
+        image_rect.x = x + 40 * i
+        image_rect.y = y
+        surface.blit(image, image_rect)
 
 
 if __name__ == "__main__":
@@ -134,7 +149,7 @@ if __name__ == "__main__":
         for hit in bullet_hits:
             score += 60 - hit.radius
             random.choice(exp_sounds).play()
-            expl = Explosion(hit.rect.center, 'lg', explosion)
+            expl = Explosion(hit.rect.center, 'large', explosion)
             all_sprites.add(expl)
             mob_ini(1)
 
@@ -142,9 +157,19 @@ if __name__ == "__main__":
         hits = pygame.sprite.spritecollide(player, mobs, True, pygame.sprite.collide_circle)
         for hit in hits:
             player.health -= hit.radius * 0.5
+            expl = Explosion(hit.rect.center, "small", explosion )
+            all_sprites.add(expl)
             mob_ini(1)
             if player.health <= 0:
-                running = False
+                death = Explosion(player.rect.center, 'player', explosion)
+                all_sprites.add(death)
+                player.hide()
+                player.lives -= 1
+                player.health = 100
+
+        if player.lives == 0 and not death.alive():
+            running = False
+
 
         # Рендеринг
         SCREEN.fill(COLOR.BLACK.value)  # заливка окна черным
@@ -152,6 +177,7 @@ if __name__ == "__main__":
         all_sprites.draw(SCREEN)
         draw_text(SCREEN, "YOUR SCORE: " + str(score), 18, WIDTH / 2, 10)
         draw_healthbar(SCREEN, 5, 5, player.health)
+        draw_lives(SCREEN, WIDTH - 115, 5, player.lives, LIVES)
         pygame.display.flip()  # отображение отрисованного экрана
 
     pygame.quit()
