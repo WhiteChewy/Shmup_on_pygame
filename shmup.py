@@ -98,6 +98,23 @@ def draw_lives(surface, x, y, lives, image):
         surface.blit(image, image_rect)
 
 
+def show_gameover_screen():
+    SCREEN.blit(new_background, BACKGROUND_RECT)
+    draw_text(SCREEN, "Shoot 'em UP!", 64, WIDTH / 2, HEIGHT / 4)
+    draw_text(SCREEN, "Arrow keys move, Space to fire", 22,
+              WIDTH / 2, HEIGHT / 2)
+    draw_text(SCREEN, "Press a key to begin", 18, WIDTH / 2, HEIGHT * 3 / 4)
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        CLOCK.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYUP:
+                waiting = False
+
+
 if __name__ == "__main__":
     # далее инициализируется игра и окно
     pygame.init()   # "запуск pygame"
@@ -130,7 +147,18 @@ if __name__ == "__main__":
     pygame.mixer.music.play(loops=-1)
     # игровой цикл
     running = True
+    game_over = True
     while running:
+        if game_over:
+            show_gameover_screen()
+            game_over = False
+            all_sprites = pygame.sprite.Group()
+            mobs = pygame.sprite.Group()
+            bullets = pygame.sprite.Group()
+            player = Player()
+            all_sprites.add(player)
+            mob_ini(8)
+            score = 0
         CLOCK.tick(FPS)  # держим цикл на правильной скорости.
         # Обработка событий
         for event in pygame.event.get():
@@ -168,7 +196,7 @@ if __name__ == "__main__":
                 player.health = 100
 
         if player.lives == 0 and not death.alive():
-            running = False
+            game_over = True
 
 
         # Рендеринг
